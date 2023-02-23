@@ -1,0 +1,42 @@
+This 'Airfoil' class handles the loading and basic processing of data
+associated with the pressure distribution around an airfoil (a 2D section of a
+wing).
+
+The 'main.py' script calls this class as airfoil.Airfoil(inputdir), where
+'inputdir' is the desired directory containing 'xy.dat' (the x-y coordinates
+for the panels of the airfoil geometry) and a number of 'alpha*.dat' files
+(with the pressure coefficient data for *, the angle of incidence of the
+airfoil). If a Runtime Error is raised during the program, it formats and
+prints the output error.
+
+The 'airfoil.py' script contains six methods: '__init__' (initializes the
+class based on the input directory, and calls the 'load_airfoil_data' method),
+'load_airfoil_data' (loads the data from the input directory, and creates the
+desired data structures, and calls 'call_calc'), 'calc_chord' (calculates and
+stores the airfoil chord length), 'calc_alpha' (calculates the lift
+coefficients and stagnation points), 'call_calc' (calls the two calculation
+methods), '__repr__' (formats the outputs in the desired string output format
+and changes the class representation to this output). The output when main.py
+calls print(airfoil.Airfoil(inputdir)) is then a table containing the lift
+coefficients (non-dimensional forces perpendicular to the flow direction) and
+stagnation point's x-y coordinates and pressure coefficients (where the flow
+velocity goes to zero) for each alpha (angle of attack of the airfoil) in the
+given input directory.
+
+The abstraction of OOP allows us to utilize this class and the methods it
+contains for different objects (here, all of the same 'Airfoil' class), e.g.
+'NACA 2412' vs. 'NACA 0012'. Decomposing the desired functions of the
+'Airfoil' class into different methods allows for easier debugging, clearer
+reading, and a general better understanding of each part's function. I also
+used encapsulation to ensure that the object attributes and internal methods
+are obscured (made private) from the public, via using ".__" prior to the
+attribute and method name.
+
+Inside the Airfoil class, I incorporated a number of error checks and
+exception generations: if f 'inputdir' is not a valid directory (line
+48), if there isn't a 'xy.dat' file in 'inputdir' (line 51), or if there
+aren't any 'alpha*.dat' files in 'inputdir' (line 82). In both sections for
+reading the 'xy.dat' and 'alpha*.dat' files, I also generate an exception if
+any errors are generated while reading data (lines 70 & 117). I also focused
+on implementing robust code, taking into account multiple possibilities in the
+data other than the two data folders provided (e.g. lines 209-263).

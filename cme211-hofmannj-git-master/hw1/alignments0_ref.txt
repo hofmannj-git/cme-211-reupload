@@ -1,0 +1,5 @@
+CTC 2 6
+AAA -1
+GGC 0
+CGT 1
+TCG 7

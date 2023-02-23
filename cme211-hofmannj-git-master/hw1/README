@@ -1,0 +1,93 @@
+PART 2:
+
+Command line log:
+
+$ python3 generatedata.py 1000 600 50 "ref_1.txt" "reads_1.txt"
+reference length: 1000
+number reads: 600
+read length: 50
+aligns 0: 0.13833333333333334
+aligns 1: 0.755
+aligns 2: 0.10666666666666667
+$ python3 generatedata.py 10000 6000 50 "ref_2.txt" "reads_2.txt"
+reference length: 10000
+number reads: 6000
+read length: 50
+aligns 0: 0.1545
+aligns 1: 0.7465
+aligns 2: 0.099
+$ python3 generatedata.py 100000 60000 50 "ref_3.txt" "reads_3.txt"
+reference length: 100000
+number reads: 60000
+read length: 50
+aligns 0: 0.15238333333333334
+aligns 1: 0.7490666666666667
+aligns 2: 0.09855
+
+Handwritten data: When I was designing the short, initial dataset, I ensured
+    that the reference didn't contain more than the desired number of alignments
+    per read. There also had to be enough diversity in the sequence to contain
+    four different reads of length 3. I could manually ensure that the reads
+    only mapped to the desired number of sequences, which is not the case for
+    the computer-generated datasets. If the frame length is not sufficiently
+    large relative to the reference length, then there will be a higher
+    probability of there being more than one match for the read in the first 50%
+    of the reference, simply due to the permutations of having four choices per
+    space.
+
+Distribution: I should expect an approximate, not exact 15%/75%/10% distribution
+    for the different alignment reads, especially at smaller numbers of reads.
+    This is due to the law of large numbers, which means that the deviation will
+    approach zero as N (the number of samples) approaches infinity.
+
+Time: I spent about 1.5-2 hours on this part.
+
+
+PART 3:
+
+Command line log:
+
+$ python3 processdata.py ref_1.txt reads_1.txt align_1.txt
+reference length: 1000
+number reads: 600
+read length: 50
+aligns 0: 0.13833333333333334
+aligns 1: 0.77
+aligns 2: 0.09166666666666666
+elapsed time: 0.0052373409271240234
+$ python3 processdata.py ref_2.txt reads_2.txt align_2.txt
+reference length: 10000
+number reads: 6000
+read length: 50
+aligns 0: 0.1545
+aligns 1: 0.747
+aligns 2: 0.0985
+elapsed time: 0.27004075050354004
+$ python3 processdata.py ref_3.txt reads_3.txt align_3.txt
+reference length: 100000
+number reads: 60000
+read length: 50
+aligns 0: 0.15238333333333334
+aligns 1: 0.74915
+aligns 2: 0.09846666666666666
+elapsed time: 24.74903917312622
+
+Distribution: The alignment distribution is very close, but not exactly the same
+    as that which I computed when creating the datasets. The zero alignments
+    percentage is exactly the same, which makes sense as they were already
+    checked across the entire reference to not have a match. For the 1 and 2
+    alignments, however, they were picked without explicitly checking if there
+    were more matches in the reference. So, in the new processdata.py framework,
+    there could be more matches than anticipated.
+
+Scalability: As stated in the lecture notes, the leading order complexity for
+    a naive string-finding algorithm is O(nm), where in our case n is the
+    number of letters in the sequence and m is the length of the substring to
+    find. This means that for a 3 billion base pair sequence, this would take
+    O(1.5e11) operations. If for every additional order of magnitude of ref-
+    erence length, there are two orders of magnitude added to the time elapsed,
+    then it would take more than 2e9 seconds to align the data for a human at
+    30x coverage and a read length of 50. This time exceeds 60 years, so it is
+    certainly not feasible to analyze all the data for a human using my program.
+
+Timing: I spent about 1.5-2 hours writing the code for this part.

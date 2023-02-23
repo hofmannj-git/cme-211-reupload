@@ -1,0 +1,57 @@
+PART 1:
+
+1. When creating this data set, I took into consideration how many movies each
+person reviewed out of the three total movies, a general movie quality for each
+(high, low, and varied), and a general pattern for how each person voted.
+
+2. Because there are 100,000 ratings from 1,000 users of 1,700 movies, this
+means that users have rated multiple movies, but not all users have rated all
+movies. I recreated this in my data, with 3 users rating 1 movie, 5 users rating
+2 movies, and 2 users rating 3 movies. I also ensured the order of the data was
+not numerical for either the user or the movie, like the real data.
+
+3. I have not created a reference solution for my test data yet, though I might
+come back and create one when I am writing or testing my code. However I did
+keep track of the data in the following way when creating it:
+   Number of movies rated: x1 (10 6 3) x2 (4 5 8 1 9) x3 (7 2)
+   Users rating movie 1: 1 2 3 6 7 8 (high)
+   Users rating movie 2: 2 4 5 7 8 9 (low)
+   Users rating movie 3: 1 2 4 5 7 9 10 (varied)
+   Users and their ratings: 1 (5 3) 2 (4 1 4) 3 (5) 4 (2 3) 5 (3 1) 6 (5)
+      7 (3 3 3) 8 (5 2) 9 (2 4) 10 (1)
+
+
+PART 2:
+
+Command line log:
+$ python3 similarity.py ml-100k/u.data similarities.txt 5
+Input MovieLens file: ml-100k/u.data
+Output file for similarity data: similarities.txt
+Minimum number of common users: 5
+Read 100000 lines with total of 1682 movies and 943 users
+Computed similarities in 21.185 seconds
+
+First ten lines of similarities.txt:
+1 (918,0.91,5)
+2 (1056,1.00,5)
+3 (1081,0.98,5)
+4 (35,0.80,6)
+5 (976,0.93,5)
+6 (279,0.96,5)
+7 (968,1.00,7)
+8 (590,0.86,6)
+9 (113,0.96,5)
+10 (1202,0.97,5)
+
+Explanation of decomposition: My program is broken down into four functions,
+    which the main part of the script calls. The first, 'adj_cos_sim', does the
+    calculation of the adjusted cosine similarity between the two movie inputs
+    given the inputted data and user threshold. The second function,
+    'checkforsimilarities', updates a dictionary for the two movies of interest
+    with a list containing the similar movie ID, similarity coefficient, and the
+    number of common users, if the similarity coefficient is greater than the
+    one in the existing dictionary. The third function, 'loadformatdata', reads
+    the data from the given "data_file" and creates the data structures that
+    will be used later. The final function, 'outputdata', outputs the formulated
+    similarity data in the desired format for each movie, and writes to the
+    given "output_file".

@@ -1,0 +1,33 @@
+Brief statement of the problem:
+    This script takes an input "maze" file and calculates a path through to the
+    final row using the "right hand wall follower" algorithm.
+
+Description of the C++ code:
+    There are three functions in the script 'mazesolver.cpp'. First,
+    'openingindex' returns the column index of the entrace point to the maze,
+    given the input maze array. Seond, 'calc_num_rows' calculates and returns
+    the number of rows in a specific maze given the input string 'mazefile'.
+    Finally, the 'main' function contains the body of the script. It first
+    confirms that the appropriate command line arguments were provided and if
+    not, provides a usage message and quits. It then loads the wall data into a
+    static array from the 'mazefile' data file. Implementing a right-hand wall
+    following algorithm initialized at the maze entrace with a downwards-facing
+    direction, it first tries to turn to the right (relative to the current
+    direction) if there is not a wall there. If there is, it then tries to go
+    straight, and then to the left. If there are walls to the right, left, and
+    straight ahead, it turns around. The tracer then advances one index in that
+    direction, and prints the new updated location to the desired output file
+    'solnfile'. This repeats until the tracer is in the final row, signalling
+    that it has found the exit.
+
+Brief summary of code verification with checksoln.py:
+    'checksoln.py' verifies the solution created by the C++ code. The function
+    'loaddata' takes in the two file names 'mazefile' and 'solnfile', loads
+    NumPy arrays from both, and returns them. The main body of the script first
+    determines if the appropriate command line arguments were provided and if
+    not, provides a usage message and exits. Using the maze and solution arrays
+    from 'loaddata', it then goes through a number of tests to verify if the
+    solution is correct, including if the initial solution position is the
+    entrance, if every solution step only moves one position and is "in-bounds"
+    and not a wall, and if the final solution position is indeed the exit. If
+    all of these conditions hold, the solution is valid.

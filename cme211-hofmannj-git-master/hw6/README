@@ -1,0 +1,31 @@
+I did not have enough time to completely debug this assignment due to the
+holiday (& the fact that ), though I do have a complete framework with all
+necessary functions.
+
+The 'main.cpp' function instantiates an Image object with the input .jpg image
+and calculates the initial sharpness. It then loops through each of the kernel
+blur sizes and calls "BoxBlur" to convolve the kernel and with the initial
+image. The sharpness of the new image is then calculated and the blurred image
+saved. After all kernels have been used, the program outputs the desired output
+with the sharpnesses for each blur size.
+
+The 'image.hpp' function contains a summary of all the methods and attributes
+within 'image.cpp'. The 'image.cpp' function contains a constructor, which
+initializes the jpegname string and reads the JPEG Greyscale. The "Save" method
+saves the existing image data as a new jpeg. The "ConvMulti" method convolves
+the area around an index (i,j) of the image with the kernel and changes the
+output (i,j). "ExtendConvMulti" does the same as ConvMulti, but incorporates the
+extensions necessary when the (i,j) of interest is within certain ranges of the
+edges. The "Convolution" method confirms that the size constrains are valid, and
+loops through each index of the jpeg and convolves it with the kernel of
+interest. "BoxBlur" initializes a kernel of ones, divided by the square of the
+kernel size (normalizing the sum to 1), and calls the convolution of this kernel
+with the jpeg array to blur the image. It stores this output. The "Sharpness"
+method initializes a kernel with the Laplacian values, and again convolves this
+kernel with the jpeg matrix. It then returns the maximum value in this array,
+which is the sharpness.
+
+The error that I was getting that I didn't have time to resolve involved an
+error within the Boost library. Namely, "Assertion 'size_type(...) < extents[0]'
+failed", which arose when attempting to change values in the output boost array
+(first on line 214 of image.cpp).
